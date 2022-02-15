@@ -1,0 +1,19 @@
+{
+    "searches": [
+        {
+            "id": 1,
+            "latitude": 38.7436883,
+            "longitude": -9.1952226
+        },
+        {
+            "id": 2,
+            "latitude": 44.8637834,
+            "longitude": -0.6211603
+        },
+        {
+            "id": 3,
+            "latitude": 25.0000188,
+            "longitude": -71.0087548
+        }
+    ]
+}

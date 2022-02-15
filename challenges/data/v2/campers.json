@@ -1,0 +1,24 @@
+{
+    "campers": [
+        {
+            "id": 1,
+            "latitude": 44.8637834,
+            "longitude": -0.6211603,
+            "price_per_day": 90.0,
+            "weekly_discount": 0.1
+        },
+        {
+            "id": 2,
+            "latitude": 44.8313035,
+            "longitude": -0.7169664,
+            "price_per_day": 75.0
+        },
+        {
+            "id": 3,
+            "latitude": 38.7436883,
+            "longitude": -9.1952226,
+            "price_per_day": 85.5,
+            "weekly_discount": 0.25
+        }
+    ]
+}
