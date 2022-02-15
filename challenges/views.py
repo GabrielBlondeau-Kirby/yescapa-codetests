@@ -18,11 +18,11 @@ def v1_search_closer_campers(request):
     searches, campers, _ = get_data(1)
 
     results = dict(results=list())
-    for s in searches:
-        r_search = dict(search_id=s['id'], search_results=list())
-        for c in campers:
-            if _is_in_bounding_box(s, c):
-                r_search['search_results'].append(dict(camper_id=c['id']))
+    for search in searches:
+        r_search = dict(search_id=search['id'], search_results=list())
+        for camper in campers:
+            if _is_camper_in_bounding_box(search, camper):
+                r_search['search_results'].append(dict(camper_id=camper['id']))
         results['results'].append(r_search)
 
     print(json.dumps(results, indent=4))  # Debug
@@ -48,14 +48,13 @@ def v2_search_closer_campers(request):
     for search in searches:
         r_search = dict(search_id=search['id'], search_results=list())
         for camper in campers:
-            if _is_in_bounding_box(search, camper):
+            if _is_camper_in_bounding_box(search, camper):
                 days = 1 + get_days(search.get('start_date'), search.get('end_date'))
                 price = camper['price_per_day'] * days
                 if days >= min_day_discount:
                     price -= price * camper.get('weekly_discount', 0)
                 r_search['search_results'].append(dict(camper_id=camper['id'], price=price))
         r_search.update({'search_results': sorted(r_search['search_results'], key=itemgetter('price'))})
-
         results['results'].append(r_search)
 
     print(json.dumps(results, indent=4))  # Debug
@@ -89,7 +88,7 @@ def v3_search_closer_campers(request):
                 continue
             # ==========
 
-            if _is_in_bounding_box(search, camper):
+            if _is_camper_in_bounding_box(search, camper):
                 # weekly_discount
                 days = 1 + get_days(search.get('start_date'), search.get('end_date'))
                 price = camper['price_per_day'] * days
@@ -141,7 +140,7 @@ def is_camper_available(camper_id: str, date_range: tuple, calendars: list):
 # ==========================================================================================
 # General Methods
 
-def _is_in_bounding_box(s_pos: dict, c_pos: dict, r: float = 0.1):
+def _is_camper_in_bounding_box(s_pos: dict, c_pos: dict, r: float = 0.1):
     """
     Helps to know if the camper is in the Bunding Box of a search.
 
@@ -150,10 +149,7 @@ def _is_in_bounding_box(s_pos: dict, c_pos: dict, r: float = 0.1):
     :param r: The radius of the pos range. __default__ 0.1
     :return: Boolean | True if the camper (c_pos) is in the bunding box else False
     """
-    if abs(s_pos['latitude'] - c_pos['latitude']) < r and abs(s_pos['longitude'] - c_pos['longitude']) < r:
-        return True
-    else:
-        return False
+    return abs(s_pos['latitude'] - c_pos['latitude']) < r and abs(s_pos['longitude'] - c_pos['longitude']) < r
 
 
 def get_days(start_date: str, end_date: str):
