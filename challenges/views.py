@@ -11,7 +11,8 @@ from datetime import datetime
 
 def v1_search_closer_campers(request):
     """
-    GET /search/campers
+    GET /v1/search/campers
+
     :param request: None
     :return: list of searches including the nearest campers
     """
@@ -35,7 +36,7 @@ def v1_search_closer_campers(request):
 
 def v2_search_closer_campers(request):
     """
-    GET /search/campers
+    GET /v2/search/campers
 
     :param request: None
     :return: list of searches including the nearest campers
@@ -68,7 +69,7 @@ def v2_search_closer_campers(request):
 
 def v3_search_closer_campers(request):
     """
-    GET /search/campers
+    GET /v3/search/campers
 
     :param request: None
     :return: list of searches including the nearest campers
@@ -108,7 +109,7 @@ def is_camper_available(camper_id: str, date_range: tuple, calendars: list):
     """
     Wil check if the camper is Available or not for the range of date <date_range>.
 
-    :param camper_id: <str> | Id of camper
+    :param camper_id: <str> | Id of a camper
     :param date_range: tuple(<str>, <str>) | from Search data
     :param calendars: <list> | list of calendar
     :return: Boolean
